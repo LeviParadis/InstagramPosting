@@ -22,6 +22,27 @@ class Image_Poster:
         self.data = 'signed_body={}.{}&ig_sig_key_version=4'.format(self.sig, tempdata)
         login = self.processor.send_request('accounts/login/', True, self.data, self.agent, False)
 
+        if "Sorry, an error occurred while processing this request" in str(login["response"]):
+            raise StandardError("Request failed, there's a chance that this proxy/ip is blocked")
+        else:
+            if login["code"] != 200:
+                raise StandardError("Error logging in")
+            else:
+                # Decode the response
+                decoded_login_response = str(login["response"])
+
+                if not decoded_login_response:
+                    raise StandardError("Could not decode response for login")
+                else:
+                    # Post the pic!
+                    self.data = self.processor.get_post_data(filename)
+                    post = self.processor.send_request('media/upload/', True, str(self.data), self.agent, True)
+                    if post["code"] != 200:
+                        raise StandardError("Error posting image")
+                    else:
+                        pass
+
+
 
 if __name__ == "__main__":
     ip = Image_Poster()

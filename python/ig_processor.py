@@ -2,8 +2,7 @@ import pycurl as curl
 import random
 import hmac
 import hashlib
-
-import datetime
+import time
 
 
 class IG_Processor:
@@ -63,8 +62,9 @@ class IG_Processor:
     def get_post_data(self, filename):
         if not filename:
             raise ValueError("Image may or may not exist")
+        now_time = str(time.time())
         data = {
-            'device_timestamp': datetime.datetime.now().time(),
+            'device_timestamp': now_time[0:now_time.index(".")],
             'photo': '@'+filename
         }
         return data
