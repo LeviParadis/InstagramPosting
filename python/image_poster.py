@@ -20,8 +20,10 @@ class Image_Poster:
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
         }
         self.sig = self.processor.generate_signature(str(self.data))
-        self.data = 'signed_body={}.{}&ig_sig_key_version=4'.format(self.sig, urlencode(self.data))
-
+        self.sig= "28fa3bd673e5abe4a12cec05a6bf32c7acc54c702b42c5a8997d8fc0ef97da3e"
+        tempdata = urlencode(self.data)
+        self.data = 'signed_body={}.{}&ig_sig_key_version=4'.format(self.sig, tempdata)
+        print self.data
         login = self.processor.send_request('accounts/login/', True, self.data, self.agent, False)
         print login
 
