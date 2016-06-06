@@ -4,6 +4,8 @@ import hmac
 import hashlib
 import time
 
+import StringIO
+
 
 class IG_Processor:
     def send_request(self, url, post, data, userAgent, cookies):
@@ -11,6 +13,7 @@ class IG_Processor:
         ch.setopt(curl.URL, 'https://i.instagram.com/api/v1/'+url)
         ch.setopt(curl.USERAGENT, userAgent)
         ch.setopt(curl.FOLLOWLOCATION, True)
+        ch.setopt(curl.WRITEFUNCTION, StringIO.StringIO().write)
 
         if post:
             ch.setopt(curl.POST, True)
@@ -63,15 +66,12 @@ class IG_Processor:
         if not filename:
             raise ValueError("Image may or may not exist")
         now_time = str(time.time())
-        data = {
-            'device_timestamp': now_time[0:now_time.index(".")],
-            'photo': '@'+filename
-        }
+        data = "{'device_timestamp': '" + now_time[0:now_time.index(".")] + "', 'photo': '@" + filename + "'}"
         return data
 
 
 if __name__ == "__main__":
     igp = IG_Processor()
-    print "GuID = " + IG_Processor.generate_guid(igp)
+    """print "GuID = " + IG_Processor.generate_guid(igp)
     print "User Agent = " + IG_Processor.generate_user_agent(igp)
-    print "Signature = " + IG_Processor.generate_signature(igp, "test data")
+    print "Signature = " + IG_Processor.generate_signature(igp, "test data")"""
