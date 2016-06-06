@@ -20,16 +20,19 @@ class Image_Poster:
             "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
         }
         self.sig = self.processor.generate_signature(str(self.data))
-        self.data = 'signed_body={}.{}&ig_sig_key_version=6'.format(self.sig, urlencode(self.data))
+        self.data = 'signed_body={}.{}&ig_sig_key_version=4'.format(self.sig, urlencode(self.data))
+
+        login = self.processor.send_request('accounts/login/', True, self.data, self.agent, False)
+        print login
 
 
 if __name__ == "__main__":
     ip = Image_Poster()
-    ip.process_post('testUsername', 'testPassword', 'testFilename', 'TestCaption')
-    print "Agent = " + ip.agent
+    ip.process_post('jimmyjohnson3674', 'leviiscool1', 'square.jpg', 'TestCaption')
+    """print "Agent = " + ip.agent
     print "GuID = " + ip.guid
     print "Device ID = " + ip.device_id
-    print "Sig = " + ip.sig
+    print "Sig = " + ip.sig"""
 
 
 

@@ -9,19 +9,18 @@ import datetime
 class IG_Processor:
     def send_request(self, url, post, data, userAgent, cookies):
         ch = curl.Curl()
-        ch.setopt(ch.URL, 'https://i.instagram.com/api/v1/'+url)
-        ch.setopt(ch.USERAGENT, userAgent)
-        ch.setopt(ch.RETURNTRANSFER, True)
-        ch.setopt(ch.FOLLOWLOCATION, True)
+        ch.setopt(curl.URL, 'https://i.instagram.com/api/v1/'+url)
+        ch.setopt(curl.USERAGENT, userAgent)
+        ch.setopt(curl.FOLLOWLOCATION, True)
 
         if post:
-            ch.setopt(ch.POST, True)
-            ch.setopt(ch.POSTFIELDS, data)
+            ch.setopt(curl.POST, True)
+            ch.setopt(curl.POSTFIELDS, data)
 
         if cookies:
-            ch.setopt(ch.COOKIEFILE, 'cookies.txt')
+            ch.setopt(curl.COOKIEFILE, 'cookies.txt')
         else:
-            ch.setopt(ch.COOKIEJAR, 'cookies.txt')
+            ch.setopt(curl.COOKIEJAR, 'cookies.txt')
 
         response = ch.perform()
         http = ch.getinfo(ch.HTTP_CODE)
@@ -50,9 +49,7 @@ class IG_Processor:
         ua_version = random.choice(possible_versions)
         ua_dpi = random.choice(possible_dpis)
 
-        return 'Instagram 6.{}.{} Android ({}/{}.{}.{}; {}; {}; samsung; {}; {}; smdkc210; en_US)'.format(
-            random.randrange(1, 2),
-            random.randrange(0, 2),
+        return 'Instagram 4.2.0 Android ({}/{}.{}.{}; {}; {}; samsung; {}; {}; smdkc210; en_US)'.format(
             random.randrange(10, 11),
             random.randrange(1, 3),
             random.randrange(3, 5),
