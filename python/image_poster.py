@@ -1,5 +1,5 @@
 from ig_processor import IG_Processor
-from urllib import urlencode
+from urllib import urlencode, quote_plus
 
 
 class Image_Poster:
@@ -12,20 +12,15 @@ class Image_Poster:
         self.sig = ""
 
     def process_post(self, username, password, filename, caption):
-        self.data = {
-            "device_id": self.device_id,
-            "guid": self.guid,
-            "username": username,
-            "password": password,
-            "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
-        }
+
+        self.data = '{"device_id":"' + self.device_id
+        self.data += '","guid":"' + self.guid + '","username":"' + username + '","password":"' + password
+        self.data += '","Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"}'
+
         self.sig = self.processor.generate_signature(str(self.data))
-        self.sig= "28fa3bd673e5abe4a12cec05a6bf32c7acc54c702b42c5a8997d8fc0ef97da3e"
-        tempdata = urlencode(self.data)
+        tempdata = quote_plus(self.data)
         self.data = 'signed_body={}.{}&ig_sig_key_version=4'.format(self.sig, tempdata)
-        print self.data
         login = self.processor.send_request('accounts/login/', True, self.data, self.agent, False)
-        print login
 
 
 if __name__ == "__main__":
