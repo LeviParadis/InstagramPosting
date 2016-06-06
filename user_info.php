@@ -14,8 +14,13 @@ function ProcessPost($username, $password, $filename, $caption){
     /* LOG IN */
 // You must be logged in to the account that you wish to post a photo too
 // Set all of the parameters in the string, and then sign it with their API key using SHA-256
+
+
+
+
     $data = '{"device_id":"'.$device_id.'","guid":"'.$guid.'","username":"'.$username.'","password":"'.$password.'","Content-Type":"application/x-www-form-urlencoded; charset=UTF-8"}';
     $sig = GenerateSignature($data);
+
     $data = 'signed_body='.$sig.'.'.urlencode($data).'&ig_sig_key_version=4';
     $login = SendRequest('accounts/login/', true, $data, $agent, false);
 
