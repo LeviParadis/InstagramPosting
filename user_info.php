@@ -29,6 +29,7 @@ function ProcessPost($username, $password, $filename, $caption){
     } else {            
         if($login['code'] != 200) {
             echo "Error while trying to login";
+            echo implode($login);
         } else {            
         // Decode the array that is returned
             $obj = @json_decode($login['response'], true);
