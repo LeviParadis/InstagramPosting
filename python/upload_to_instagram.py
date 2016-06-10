@@ -1,4 +1,5 @@
 import getopt
+import os
 from getpass import getpass
 
 from ig_uploader import InstaUploader
