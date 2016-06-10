@@ -1,4 +1,5 @@
 import pycurl as curl
+import requests
 import random
 import hmac
 import hashlib
@@ -9,26 +10,25 @@ import StringIO
 
 class IG_Processor:
     def send_request(self, url, post, data, userAgent, cookies):
-        ch = curl.Curl()
-        ch.setopt(curl.URL, 'https://i.instagram.com/api/v1/'+url)
-        ch.setopt(curl.USERAGENT, userAgent)
-        ch.setopt(curl.FOLLOWLOCATION, True)
-        ch.setopt(curl.WRITEFUNCTION, StringIO.StringIO().write)
+        headers = {
+            "user-agent": userAgent,
+            "follow-location": True,
+            "write-function": StringIO.StringIO().write,
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
 
         if post:
-            ch.setopt(curl.POST, True)
-            ch.setopt(curl.POSTFIELDS, data)
+            headers["post-fields"] = data
 
         if cookies:
-            ch.setopt(curl.COOKIEFILE, 'cookies.txt')
+            headers["cookie-file"] = "cookies.txt"
         else:
-            ch.setopt(curl.COOKIEJAR, 'cookies.txt')
+            headers["cookie-jar"] = "cookies.txt"
 
-        response = ch.perform()
-        http = ch.getinfo(ch.HTTP_CODE)
-        ch.close()
+        rq = requests.post("https://i.instagram.com/api/v1/{}".format(url), headers=headers)
 
-        return {'code': http, 'response': response}
+        return {'code': rq.status_code, 'response': rq.content}
 
     def generate_guid(self):
         return '{}{}-{}-{}-{}-{}-{}'.format(
@@ -66,7 +66,8 @@ class IG_Processor:
         if not filename:
             raise ValueError("Image may or may not exist")
         now_time = str(time.time())
-        data = "{'device_timestamp': '" + now_time[0:now_time.index(".")] + "', 'photo': '@" + filename + "'}"
+        now_time = now_time[0:now_time.index(".")]
+        data = "{'device_timestamp': '" + now_time + "', 'photo': '@" + filename + "'}"
         return data
 
 

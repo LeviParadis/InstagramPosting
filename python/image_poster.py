@@ -29,7 +29,7 @@ class Image_Poster:
             raise StandardError("Request failed, there's a chance that this proxy/ip is blocked")
         else:
             if login["code"] != 200:
-                raise StandardError("Error logging in")
+                raise StandardError("Error logging in - received code {}".format(login["code"]))
             else:
                 # Decode the response
                 decoded_login_response = str(login["response"])
@@ -48,7 +48,7 @@ class Image_Poster:
 
 if __name__ == "__main__":
     ip = Image_Poster()
-    ip.process_post('hjeph123', 'harryjephiscool', 'square.jpg', 'TestCaption')
+    ip.process_post('leviparadis123', 'leviiscool1', 'square.jpg', 'TestCaption')
     """print "Agent = " + ip.agent
     print "GuID = " + ip.guid
     print "Device ID = " + ip.device_id
