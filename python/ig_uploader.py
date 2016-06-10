@@ -14,10 +14,10 @@ urllib_quote_plus = urllib.quote
 
 class InstaUploader(object):
 
-    def generate_signature(data):
+    def generate_signature(self, data):
         return hmac.new('b4a23f5e39b5929e0666ac5de94c89d1618a2916', data, hashlib.sha256).hexdigest()
 
-    def generate_user_agent():
+    def generate_user_agent(self):
         possible_resolutions = ['720x1280', '320x480', '480x800', '1024x768', '1280x720', '768x1024', '480x320']
         possible_versions = ['GT-N7000', 'SM-N9000', 'GT-I9220', 'GT-I9100']
         possible_dpis = ['120', '160', '320', '240']
