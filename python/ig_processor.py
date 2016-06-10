@@ -1,34 +1,34 @@
-import pycurl as curl
 import requests
 import random
 import hmac
 import hashlib
 import time
 
-import StringIO
-
 
 class IG_Processor:
     def send_request(self, url, post, data, userAgent, cookies):
         headers = {
-            "user-agent": userAgent,
-            "follow-location": True,
-            "write-function": StringIO.StringIO().write,
+            "User-Agent": userAgent,
+            "Follow-Location": True,
             "Content-Type": "application/json",
             "Accept": "application/json"
         }
 
-        if post:
-            headers["post-fields"] = data
+        req = {'code': -1, 'response': 'null'}
 
         if cookies:
             headers["cookie-file"] = "cookies.txt"
         else:
             headers["cookie-jar"] = "cookies.txt"
 
-        rq = requests.post("https://i.instagram.com/api/v1/{}".format(url), headers=headers)
+        if post:
+            req = requests.post(
+                "https://i.instagram.com/api/v1/{}".format(url),
+                data=data,
+                headers=headers
+            )
 
-        return {'code': rq.status_code, 'response': rq.content}
+        return {'code': req.status_code, 'response': req.content}
 
     def generate_guid(self):
         return '{}{}-{}-{}-{}-{}-{}'.format(

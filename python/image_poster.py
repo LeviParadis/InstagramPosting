@@ -38,8 +38,7 @@ class Image_Poster:
                 else:
                     # Post the pic!
                     self.data = self.processor.get_post_data(filename)
-                    newdata = json.loads(json.dumps(self.data))
-                    post = self.processor.send_request('media/upload/', True, quote_plus(newdata), self.agent, True)
+                    post = self.processor.send_request('media/upload/', True, self.data, self.agent, True)
                     if post["code"] != 200:
                         raise StandardError("Error posting image - code {}".format(post["code"]))
                     else:
