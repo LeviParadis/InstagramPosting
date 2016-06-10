@@ -67,7 +67,8 @@ class IG_Processor:
             raise ValueError("Image may or may not exist")
         now_time = str(time.time())
         now_time = now_time[0:now_time.index(".")]
-        data = "{'device_timestamp': '" + now_time + "', 'photo': '@" + filename + "'}"
+        data = "['device_timestamp': '" + now_time + "', 'photo': '@" + filename + "']"
+        print data
         return data
 
 
