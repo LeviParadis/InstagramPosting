@@ -101,7 +101,7 @@ class InstaUploader(object):
 
 if __name__ == "__main__":
     ip = InstaUploader()
-    if ip.login('leviparadis123', 'leviiscool1'):
+    if ip.login('rameezy456', 'leviiscool'):
         media_id = ip.upload_photo("square.jpg")
         if media_id is not None:
             ip.configure_photo(media_id, "Test Caption")
