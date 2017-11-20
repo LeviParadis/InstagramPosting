@@ -1,0 +1,22 @@
+Metadata-Version: 2.0
+Name: pynstagram
+Version: 0.1.4
+Summary: CLI tool to post pictures in Instagram
+Home-page: https://github.com/mr0re1/pynstagram
+Author: Ivan Orlov
+Author-email: camarada.0re1@gmail.com
+License: MIT
+Keywords: instagram cli
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Internet
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.6
+Classifier: Programming Language :: Python :: 2.7
+Requires-Dist: requests (>=2)
+
+UNKNOWN
+
+
